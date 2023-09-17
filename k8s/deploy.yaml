@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: unscan-geth-conf
-  namespace: default
+  namespace: uns
   labels:
     app: unscan-geth-conf
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: unscan-geth-conf
-          image: solidhash/unscan-geth-conf:latest
+          image: cryptociva/unscan-nginx-conf
           imagePullPolicy: Always
           # resources:
           # limits:
@@ -31,21 +31,21 @@ apiVersion: v1
 kind: Service
 metadata:
   name: unscan-geth-conf-service
-  namespace: default
+  namespace: uns
 spec:
   ports:
     - name: http
       port: 8080
       targetPort: 80
   selector:
-    app: solidhash/unscan-geth-conf
+    app: unscan-geth-conf
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: unscan-geth-conf-ingress
-  namespace: default
+  namespace: uns
 spec:
   rules:
     - host: testnet.unscan.io
